@@ -43,9 +43,10 @@ let calculatorModule = (() => {
   };
 
   const equals = () => {
-    let operation = checkOperation(_inputs[1]);
-    let results = calculate(operation, _inputs[0], _inputs[2]);
-    let finalOperation = `${_inputs[0]} ${_inputs[1]} ${_inputs[2]} = ${results}`;
+    let [x, operator, y] = [_inputs]
+    let operation = checkOperation(operator);
+    let results = calculate(operation, x, y);
+    let finalOperation = `${x} ${operator} ${y} = ${results}`;
     _operations = [..._operations, finalOperation];
     _inputs = [];
     return results;
