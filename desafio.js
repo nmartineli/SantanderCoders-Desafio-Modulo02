@@ -14,54 +14,57 @@ let calculatorModule = (() => {
   let _inputs = [];
   let _operations = [];
 
-  const checkOperation = () => {
-    switch (_inputs[1]) {
-      case '+':
-        return sum;
-
-      case '-':
-        return subtract;
-
-      case '/':
-        return divide;
-
-      case '*':
-        return multiply;
-    }
-  };
-
   const sum = (a, b) => a + b;
   const subtract = (a, b) => a - b;
   const multiply = (a, b) => a * b;
   const divide = (a, b) => (b > 0 ? a / b : NaN);
 
-  const calculate = (operation, a, b) => operation(a, b);
+  const getOperation = {
+    '+': sum,
+    '-': subtract,
+    '*': multiply,
+    '/': divide,
+  };
 
   const enter = (input) => {
     _inputs = [..._inputs, input];
-    return input;
+    console.log(input);
   };
 
   const equals = () => {
-    let [x, operator, y] = [_inputs]
-    let operation = checkOperation(operator);
-    let results = calculate(operation, x, y);
-    let finalOperation = `${x} ${operator} ${y} = ${results}`;
+    let [a, operator, b] = _inputs;
+
+    if (
+      typeof a !== 'number' ||
+      typeof b !== 'number' ||
+      !getOperation[operator]
+    ) {
+      _inputs = [];
+      return console.log(
+        'Você inseriu dados inválidos. Por favor, refaça o seu cálculo'
+      );
+    }
+
+    let operation = getOperation[operator];
+
+    let results = operation(a, b);
+
+    let finalOperation = `${a} ${operator} ${b} = ${results}`;
     _operations = [..._operations, finalOperation];
-    _inputs = [];
-    return results;
+
+    console.log(results);
   };
 
   const list = () => {
-    _operations.map((operation) => {
-      console.log(operation);
+    _operations.map((operation, index) => {
+      console.log(`Operação ${index + 1}: ${operation}`);
     });
   };
 
   const reset = () => {
     _operations = [];
     _inputs = [];
-    return _operations;
+    console.log(_operations);
   };
 
   return {
@@ -71,6 +74,18 @@ let calculatorModule = (() => {
     reset,
   };
 })();
+
+calculatorModule.enter(5);
+calculatorModule.enter('v');
+calculatorModule.enter(5);
+calculatorModule.equals();
+
+calculatorModule.enter(100);
+calculatorModule.enter('-');
+calculatorModule.enter(30);
+calculatorModule.equals();
+
+calculatorModule.list();
 
 /* Faça uma série de strings dos nomes dizendo se eles podem ou não ir para The Matrix (> 18 anos)  */
 
