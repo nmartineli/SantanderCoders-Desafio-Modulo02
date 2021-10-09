@@ -32,7 +32,7 @@ let calculatorModule = (() => {
   };
 
   const equals = () => {
-    let [a, operator, b] = _inputs;
+    const [a, operator, b] = _inputs;
 
     if (
       typeof a !== 'number' ||
@@ -45,11 +45,11 @@ let calculatorModule = (() => {
       );
     }
 
-    let operation = getOperation[operator];
+    const operation = getOperation[operator];
 
-    let results = operation(a, b);
+    const results = operation(a, b);
 
-    let finalOperation = `${a} ${operator} ${b} = ${results}`;
+    const finalOperation = `${a} ${operator} ${b} = ${results}`;
     _operations = [..._operations, finalOperation];
 
     console.log(results);
